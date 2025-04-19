@@ -81,7 +81,7 @@
                                         </thead>
                                         <tbody id="addPurchaseItem">
                                         </tbody>
-                                        <tfood>
+                                        <tfoot>
 <!--                                            <tr>
                                                 <td class="text-right" > <button class="btn btn-info btn-block additem">Add New Item </button></td>
                                                     <td></td>
@@ -241,14 +241,14 @@
                     $('#cheque').show();
                     $('#issuedate').show();
                     $('#bankid').show();
-                    $('#rnamr').show();
+                    $('#rname').show();
                     $('#rcontact').show();
                 } 
 
                 else if(type =='Cash'){
 
                     console.log(type);
-                    $('#rnamr').show();
+                    $('#rname').show();
                     $('#rcontact').show();
                     $('#cheque').hide();
                     $('#issuedate').hide();
@@ -441,11 +441,11 @@ $(this.target).find('input').autocomplete();
                 data: '',
                 }).done(function (response) {
                     var rows = $('table').find("#medicine");
-                //console.log(response);
-                $("#addPurchaseItem").html(response);
-                //$(rows).html(response);
+                    //console.log(response);
+                    $("#addPurchaseItem").html(response);
+                    //$(rows).html(response);
                     
-                    });      
+                });      
    return false;
   },
  });
@@ -599,7 +599,7 @@ $(this.target).find('input').autocomplete();
 
     });
     </script> 
-<!--    <script>
+    <!--    <script>
     $(document).ready(function() {
         $(".print").on('click',function(){
             console,log('sdgdfg');

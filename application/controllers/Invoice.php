@@ -356,7 +356,7 @@ class Invoice extends CI_Controller {
                         echo '</script>';
                     die();
                 }
-        $product = $this->invoice_model->SpecificMedicine($pid);       
+                $product = $this->invoice_model->SpecificMedicine($pid);       
                 $totall = ($mrp * $qty);
                 $total = ($mrp * $qty);
                 echo "          <tr class='premove'>

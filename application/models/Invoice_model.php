@@ -186,10 +186,10 @@
     public function TopSellingProduct(){
         $sql = "SELECT 
                   product_id,
-                  ANY_VALUE(product_image) AS product_image,
-                  ANY_VALUE(product_name) AS product_name,
-                  ANY_VALUE(generic_name) AS generic_name,
-                  ANY_VALUE(expire_date) AS expire_date,
+                  product_image,
+                  product_name,
+                  generic_name,
+                  expire_date,
                   SUM(sale_qty) AS total_sold
               FROM 
                   medicine

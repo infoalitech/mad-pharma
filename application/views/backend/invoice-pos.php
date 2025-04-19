@@ -905,72 +905,77 @@ if (val == 1)
     </script>
     <!--Product add to card-->
    <script>
-$("#qty").keypress(function(e) {
-    if(e.which == 13 || e.keycode == '13') {
-            var iid = $('#customer_id').val();
-            console.log(iid);
-            if(isNaN(iid) == false){
-                //console.log(qty);
-                //var iid = cid[0].id;
-                var iid = $('#customer_id').val();
-              }
-            var formval = $('#SalesForm')[0];
-            var data = new FormData(formval);
-            $.ajax({
-                type: "POST",
-                enctype: 'multipart/form-data',
-                url: "Pos_Info",
-                dataType: 'html',
-                data: data,
-                processData: false,
-                contentType: false,
-                cache: false,
-                timeout: 600000,
-          success: function(response) {
-              
-             $("#posinfo").append(response);
-              calc_total();
-              calc_discount();
-              function calc_total(){
-                  var sum = 0;
-                  $(".totall").each(function(){
-                      sum += parseFloat($(this).val());
-                  });
-                  $('.grandtotal').val(sum.toFixed(2));
-                  var pay = 0;
-                  $(".total").each(function(){
-                      pay += parseFloat($(this).val());
-                  });
-                  
-                  $('.payable').val(pay.toFixed(2));
-              }
-              function calc_discount(){
-                  var discount = 0;
-                  $(".discount").each(function(){
-                      discount += parseFloat($(this).val());
-                  });
-                  $('.gdiscount').val(discount);
-              }
-              $('#salesposSubmit').show();
-              $('#saleSubmit').show();
-              $('#FinalSubmit').show();
-              $('#Billhold').show();
-              $('#qty').val("");
-              $('.mrp').val("");
-              $('.stock').val("");
-              $('.proname').val("");
-              $('.genname').val("");
-              $('.proval').val("");
-              $('#expiry').hide();
-              $('#product_name').attr('tabindex', 2).focus();
-              
-          },
-          error: function(response) {
-            console.error();
-          }
-            });
+function fetchPosInfo() {
+    var iid = $('#customer_id').val();
+    console.log(iid);
+
+    if (!isNaN(iid)) {
+        var formval = $('#SalesForm')[0];
+        var data = new FormData(formval);
+        
+        $.ajax({
+            type: "POST",
+            enctype: 'multipart/form-data',
+            url: "Pos_Info",
+            dataType: 'html',
+            data: data,
+            processData: false,
+            contentType: false,
+            cache: false,
+            timeout: 600000,
+            success: function(response) {
+                $("#posinfo").append(response);
+                calc_total();
+                calc_discount();
+
+                $('#salesposSubmit, #saleSubmit, #FinalSubmit, #Billhold').show();
+
+                $('#qty').val("");
+                $('.mrp, .stock, .proname, .genname, .proval').val("");
+                $('#expiry').hide();
+                $('#product_name').attr('tabindex', 2).focus();
+            },
+            error: function(response) {
+                console.error();
+            }
+        });
     }
-});    
+}
+
+function calc_total() {
+    var sum = 0;
+    $(".totall").each(function() {
+        sum += parseFloat($(this).val()) || 0;
+    });
+    $('.grandtotal').val(sum.toFixed(2));
+
+    var pay = 0;
+    $(".total").each(function() {
+        pay += parseFloat($(this).val()) || 0;
+    });
+    $('.payable').val(pay.toFixed(2));
+}
+
+function calc_discount() {
+    var discount = 0;
+    $(".discount").each(function() {
+        discount += parseFloat($(this).val()) || 0;
+    });
+    $('.gdiscount').val(discount.toFixed(2));
+}
+
+// Keypress (Enter key)
+$("#qty").keypress(function(e) {
+    if (e.which == 13 || e.keyCode == 13) {
+        fetchPosInfo();
+    }
+});
+
+// OnChange as well
+$("#qty").on("change", function() {
+    fetchPosInfo();
+});
+ 
     </script>     
 <!-- //Customer information monthly income
   <script type="text/javascript">
