@@ -184,19 +184,20 @@
     }
     /*Top selling Product*/    
     public function TopSellingProduct(){
-        $sql = "select 
-              product_image,
-              product_image,
-              product_name,
-              generic_name,
-              expire_date,
-              SUM(sale_qty)
-        
-              AS total_sold
-            from `medicine`
-            group by `product_id`
-            order by sum(sale_qty) desc
-            LIMIT 5";
+        $sql = "SELECT 
+                  product_id,
+                  ANY_VALUE(product_image) AS product_image,
+                  ANY_VALUE(product_name) AS product_name,
+                  ANY_VALUE(generic_name) AS generic_name,
+                  ANY_VALUE(expire_date) AS expire_date,
+                  SUM(sale_qty) AS total_sold
+              FROM 
+                  medicine
+              GROUP BY 
+                  product_id
+              ORDER BY 
+                  total_sold DESC
+              LIMIT 5;";
         $query = $this->db->query($sql);
         $result = $query->result();
         return $result;        
