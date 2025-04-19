@@ -184,7 +184,15 @@
     }
     /*Top selling Product*/    
     public function TopSellingProduct(){
-        $sql = "select *,  SUM(sale_qty) AS total_sold
+        $sql = "select 
+              product_image,
+              product_image,
+              product_name,
+              generic_name,
+              expire_date,
+              SUM(sale_qty)
+        
+              AS total_sold
             from `medicine`
             group by `product_id`
             order by sum(sale_qty) desc
